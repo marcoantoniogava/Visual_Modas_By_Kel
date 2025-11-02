@@ -34,7 +34,6 @@ async function carregarDadosUsuario() {
         
         // Carregar dados relacionados
         carregarPedidos();
-        carregarFavoritos();
     } catch (error) {
         console.error('Erro ao carregar dados do usuário:', error);
         showNotification('Erro ao carregar seus dados. Tente novamente.');
@@ -378,79 +377,6 @@ function confirmarEntregaPedido(pedidoId) {
             }
         }
     });
-}
-
-// Favoritos
-async function carregarFavoritos() {
-    try {
-        const grid = document.getElementById('favoritosGrid');
-        const empty = document.getElementById('favoritosEmpty');
-        
-        // Buscar favoritos da API
-        const response = await fetch('/api/favoritos');
-        if (!response.ok) {
-            throw new Error('Erro ao carregar favoritos');
-        }
-        
-        const favoritos = await response.json();
-
-        if (!favoritos || favoritos.length === 0) {
-            grid.style.display = 'none';
-            empty.style.display = 'block';
-            return;
-        }
-
-        grid.style.display = 'grid';
-        empty.style.display = 'none';
-
-        grid.innerHTML = favoritos.map(produto => {
-            const fotoUrl = produto.foto_url && !produto.foto_url.startsWith('http') 
-                ? `http://localhost:5000${produto.foto_url.startsWith('/') ? '' : '/'}${produto.foto_url}`
-                : produto.foto_url || 'design/ex-roupa1.png';
-                
-            return `
-                <div class="produto-card">
-                    <button class="produto-favorito favorito-active" onclick="removerFavorito(${produto.id})">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                                stroke="#370400" stroke-width="1.5" fill="#370400"/>
-                        </svg>
-                    </button>
-                    <div class="produto-img-container">
-                        <img src="${fotoUrl}" alt="${produto.nome}" class="produto-img">
-                    </div>
-                    <div class="produto-info">
-                        <span class="produto-nome">${produto.nome}</span>
-                        <span class="produto-preco">R$ ${produto.preco.toFixed(2).replace('.', ',')}</span>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    } catch (error) {
-        console.error('Erro ao carregar favoritos:', error);
-        const grid = document.getElementById('favoritosGrid');
-        const empty = document.getElementById('favoritosEmpty');
-        grid.style.display = 'none';
-        empty.style.display = 'block';
-    }
-}
-
-async function removerFavorito(produtoId) {
-    try {
-        const response = await fetch(`/api/favoritos/${produtoId}`, {
-            method: 'DELETE'
-        });
-        
-        if (response.ok) {
-            await carregarFavoritos();
-            showNotification('Produto removido dos favoritos');
-        } else {
-            throw new Error('Erro ao remover favorito');
-        }
-    } catch (error) {
-        console.error('Erro ao remover favorito:', error);
-        showNotification('Erro ao remover favorito. Tente novamente.');
-    }
 }
 
 // Segurança

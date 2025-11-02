@@ -65,4 +65,12 @@ var rotasPedidos = []Rota{
 		RequerAutenticacao: true,
 		RequerAdmin:        true,
 	},
+	// Obter total de vendas (admin)
+	{
+		URI:                "/api/admin/pedidos/total-vendas",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.ObterTotalVendas,
+		RequerAutenticacao: true,
+		RequerAdmin:        true,
+	},
 }

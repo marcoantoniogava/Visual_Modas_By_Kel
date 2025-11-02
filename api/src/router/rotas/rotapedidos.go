@@ -55,6 +55,13 @@ var rotasPedidos = []Rota{
 		Funcao:             controllers.AtualizarCodigoRastreio,
 		RequerAutenticacao: true,
 	},
+	// Obter total de vendas (admin)
+	{
+		URI:                "/admin/pedidos/total-vendas",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.ObterTotalVendas,
+		RequerAutenticacao: true,
+	},
 	// Criar cobrança no AbacatePay (rota da API)
 	{
 		URI:                "/abacatepay/criar-cobranca",

@@ -435,3 +435,23 @@ func (repositorio Pedidos) ConfirmarEntrega(pedidoID uint64, usuarioID uint64) e
 
 	return nil
 }
+
+// ObterTotalVendas retorna o valor total de todas as vendas
+func (repositorio Pedidos) ObterTotalVendas() (float64, error) {
+	var total sql.NullFloat64
+
+	// Buscar a soma de todos os pedidos
+	erro := repositorio.db.QueryRow("SELECT COALESCE(SUM(total), 0) FROM pedidos").Scan(&total)
+	if erro != nil {
+		fmt.Printf("Erro ao buscar total de vendas: %v\n", erro)
+		return 0, erro
+	}
+
+	if !total.Valid {
+		fmt.Println("Total de vendas NULL, retornando 0")
+		return 0, nil
+	}
+
+	fmt.Printf("Total de vendas calculado: R$ %.2f\n", total.Float64)
+	return total.Float64, nil
+}

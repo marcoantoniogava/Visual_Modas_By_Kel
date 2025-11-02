@@ -296,14 +296,19 @@ function deletarProduto(produtoId) {
             $.ajax({
                 url: `/api/produtos/${produtoId}`,
                 method: "DELETE",
-                success: function () {
+                success: function (data, textStatus, xhr) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Deletado!',
                         text: 'Produto deletado com sucesso!',
                         confirmButtonColor: '#370400'
                     });
-                    buscarMeusProdutos(); // Recarregar lista
+                    // Recarregar lista de produtos conforme o contexto
+                    if (typeof carregarProdutos === 'function') {
+                        carregarProdutos();
+                    } else if (typeof buscarMeusProdutos === 'function') {
+                        buscarMeusProdutos();
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error("Erro ao deletar produto:", error);
@@ -320,6 +325,22 @@ function deletarProduto(produtoId) {
                         text: mensagem,
                         confirmButtonColor: '#370400'
                     });
+                },
+                statusCode: {
+                    204: function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deletado!',
+                            text: 'Produto deletado com sucesso!',
+                            confirmButtonColor: '#370400'
+                        });
+                        // Recarregar lista de produtos conforme o contexto
+                        if (typeof carregarProdutos === 'function') {
+                            carregarProdutos();
+                        } else if (typeof buscarMeusProdutos === 'function') {
+                            buscarMeusProdutos();
+                        }
+                    }
                 }
             });
         }

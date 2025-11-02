@@ -422,3 +422,27 @@ func ConfirmarEntrega(w http.ResponseWriter, r *http.Request) {
 	println("Entrega confirmada! PedidoID:", pedidoID, "UsuarioID:", usuarioID)
 	respostas.JSON(w, http.StatusOK, map[string]string{"mensagem": "Entrega confirmada com sucesso"})
 }
+
+// ObterTotalVendas retorna o total de vendas (admin)
+func ObterTotalVendas(w http.ResponseWriter, r *http.Request) {
+	// Conectar ao banco
+	db, erro := banco.Conectar()
+	if erro != nil {
+		println("Erro ao conectar ao banco para total de vendas:", erro.Error())
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+	defer db.Close()
+
+	// Buscar total de vendas
+	repositorio := repositorios.NovoRepositorioDePedidos(db)
+	total, erro := repositorio.ObterTotalVendas()
+	if erro != nil {
+		println("Erro ao obter total de vendas:", erro.Error())
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	println("Total de vendas retornado pela API:", total)
+	respostas.JSON(w, http.StatusOK, map[string]float64{"total": total})
+}

@@ -46,96 +46,20 @@
         <aside class="painel-admin-sidebar">
             <nav>
                 <ul class="painel-sidebar-menu">
-                    <li><a href="#" class="menu-item active" data-section="dashboard">
-                            <span class="painel-icon">📊</span>
-                            Dashboard
-                        </a></li>
-                    <li><a href="#" class="menu-item" data-section="produtos">
+                    <li><a href="#" class="menu-item active" data-section="produtos">
                             <span class="painel-icon">👗</span>
                             Produtos
-                        </a></li>
-                    <li><a href="#" class="menu-item" data-section="estoque">
-                            <span class="painel-icon">📦</span>
-                            Estoque
                         </a></li>
                     <li><a href="#" class="menu-item" data-section="pedidos">
                             <span class="painel-icon">🛒</span>
                             Pedidos
-                        </a></li>
-                    <li><a href="#" class="menu-item" data-section="financeiro">
-                            <span class="painel-icon">💰</span>
-                            Financeiro
-                        </a></li>
-                    <li><a href="#" class="menu-item" data-section="clientes">
-                            <span class="painel-icon">👥</span>
-                            Clientes
-                        </a></li>
-                    <li><a href="#" class="menu-item" data-section="relatorios">
-                            <span class="painel-icon">📈</span>
-                            Relatórios
                         </a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="painel-admin-main">
-            <div id="dashboard-section" class="painel-admin-section">
-                <div class="painel-admin-header">
-                    <h1 class="painel-admin-title">Dashboard</h1>
-                    <p class="painel-admin-subtitle">Visão geral do negócio</p>
-                </div>
-
-                <div class="painel-graficos-dashboard">
-                    <div class="painel-grafico-card">
-                        <h3 class="painel-grafico-titulo">Vendas Mensais</h3>
-                        <canvas id="grafico-vendas-mensais" height="120"></canvas>
-                    </div>
-                    <div class="painel-grafico-card">
-                        <h3 class="painel-grafico-titulo">Pedidos Ativos x Pendentes</h3>
-                        <canvas id="grafico-pedidos-status" height="120"></canvas>
-                    </div>
-                </div>
-
-                <div class="painel-stats-grid">
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">R$ 12.450</div>
-                        <div class="painel-stat-label">Vendas do Mês</div>
-                    </div>
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">48</div>
-                        <div class="painel-stat-label">Produtos Ativos</div>
-                    </div>
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">12</div>
-                        <div class="painel-stat-label">Pedidos Pendentes</div>
-                    </div>
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">256</div>
-                        <div class="painel-stat-label">Clientes Cadastrados</div>
-                    </div>
-                </div>
-
-                <div class="painel-content-section">
-                    <div class="painel-section-header">
-                        <h2 class="painel-section-title">Pedidos Recentes</h2>
-                    </div>
-                    <table class="painel-data-table">
-                        <thead>
-                            <tr>
-                                <th>Pedido</th>
-                                <th>Cliente</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="produtos-section" class="painel-admin-section painel-hidden">
+            <div id="produtos-section" class="painel-admin-section">
                 <div class="painel-admin-header">
                     <h1 class="painel-admin-title">Produtos</h1>
                     <p class="painel-admin-subtitle">Gerenciamento de produtos</p>
@@ -170,35 +94,6 @@
                 </div>
             </div>
 
-            <div id="estoque-section" class="painel-admin-section painel-hidden">
-                <div class="painel-admin-header">
-                    <h1 class="painel-admin-title">Controle de Estoque</h1>
-                    <p class="painel-admin-subtitle">Gestão de inventário</p>
-                </div>
-
-                <div class="painel-content-section">
-                    <div class="painel-section-header">
-                        <h2 class="painel-section-title">Produtos em Estoque</h2>
-                        <button class="painel-btn-primary" onclick="openModal('estoque-modal')">Atualizar
-                            Estoque</button>
-                    </div>
-                    <table class="painel-data-table">
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>SKU</th>
-                                <th>Quantidade</th>
-                                <th>Estoque Mínimo</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
             <div id="pedidos-section" class="painel-admin-section painel-hidden">
                 <div class="painel-admin-header">
                     <h1 class="painel-admin-title">Pedidos</h1>
@@ -208,6 +103,11 @@
                 <div class="painel-content-section">
                     <div class="painel-section-header">
                         <h2 class="painel-section-title">Lista de Pedidos</h2>
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="font-size: 18px; font-weight: 600; color: #370400;">
+                                Total em vendas: <span id="total-vendas">R$ 0,00</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="painel-search-bar">
                         <input type="text" class="painel-search-input" placeholder="Buscar pedidos...">
@@ -229,116 +129,6 @@
                 </div>
             </div>
 
-            <div id="financeiro-section" class="painel-admin-section painel-hidden">
-                <div class="painel-admin-header">
-                    <h1 class="painel-admin-title">Financeiro</h1>
-                    <p class="painel-admin-subtitle">Controle financeiro</p>
-                </div>
-
-                <div class="painel-stats-grid">
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">R$ 125.450</div>
-                        <div class="painel-stat-label">Receita Total</div>
-                    </div>
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">R$ 85.230</div>
-                        <div class="painel-stat-label">Receita Líquida</div>
-                    </div>
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">R$ 40.220</div>
-                        <div class="painel-stat-label">Custos</div>
-                    </div>
-                    <div class="painel-stat-card">
-                        <div class="painel-stat-value">68%</div>
-                        <div class="painel-stat-label">Margem de Lucro</div>
-                    </div>
-                </div>
-
-                <div class="painel-content-section">
-                    <div class="painel-section-header">
-                        <h2 class="painel-section-title">Movimentações Financeiras</h2>
-                    </div>
-                    <table class="painel-data-table">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Tipo</th>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="clientes-section" class="painel-admin-section painel-hidden">
-                <div class="painel-admin-header">
-                    <h1 class="painel-admin-title">Clientes</h1>
-                    <p class="painel-admin-subtitle">Gerenciamento de clientes</p>
-                </div>
-
-                <div class="painel-content-section">
-                    <div class="painel-section-header">
-                        <h2 class="painel-section-title">Lista de Clientes</h2>
-                    </div>
-                    <div class="painel-search-bar">
-                        <input type="text" class="painel-search-input" placeholder="Buscar clientes...">
-                    </div>
-                    <table class="painel-data-table">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Pedidos</th>
-                                <th>Valor Total</th>
-                                <th>Cadastro</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="relatorios-section" class="painel-admin-section painel-hidden">
-                <div class="painel-admin-header">
-                    <h1 class="painel-admin-title">Relatórios</h1>
-                    <p class="painel-admin-subtitle">Análises e relatórios</p>
-                </div>
-
-                <div class="painel-content-section">
-                    <div class="painel-section-header">
-                        <h2 class="painel-section-title">Relatórios Disponíveis</h2>
-                    </div>
-                    <div
-                        style="padding: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                        <div class="painel-stat-card">
-                            <h3>Vendas Mensais</h3>
-                            <p style="margin: 10px 0; color: #666;">Análise detalhada das vendas por mês</p>
-                            <button class="painel-btn-primary">Gerar Relatório</button>
-                        </div>
-                        <div class="painel-stat-card">
-                            <h3>Produtos Mais Vendidos</h3>
-                            <p style="margin: 10px 0; color: #666;">Ranking dos produtos com maior saída</p>
-                            <button class="painel-btn-primary">Gerar Relatório</button>
-                        </div>
-                        <div class="painel-stat-card">
-                            <h3>Análise de Clientes</h3>
-                            <p style="margin: 10px 0; color: #666;">Perfil e comportamento de compra</p>
-                            <button class="painel-btn-primary">Gerar Relatório</button>
-                        </div>
-                        <div class="painel-stat-card">
-                            <h3>Fluxo de Caixa</h3>
-                            <p style="margin: 10px 0; color: #666;">Entradas e saídas financeiras</p>
-                            <button class="painel-btn-primary">Gerar Relatório</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </div>
 
@@ -432,48 +222,6 @@
         </div>
     </div>
 
-    <!-- Modal de Estoque -->
-    <div id="estoque-modal" class="painel-modal">
-        <div class="painel-modal-content">
-            <div class="painel-modal-header">
-                <h2 class="painel-modal-title">Atualizar Estoque</h2>
-                <button class="painel-close-btn" onclick="closeModal('estoque-modal')">&times;</button>
-            </div>
-            <div class="painel-modal-body">
-                <form id="estoque-form">
-                    <div class="painel-admin-form-group">
-                        <label class="painel-admin-form-label">Produto</label>
-                        <select class="painel-admin-form-select" required>
-                            <option value="">Selecione um produto</option>
-                        </select>
-                    </div>
-                    <div class="painel-admin-form-group">
-                        <label class="painel-admin-form-label">Tipo de Movimentação</label>
-                        <select class="painel-admin-form-select" required>
-                            <option value="">Selecione o tipo</option>
-                            <option value="entrada">Entrada</option>
-                            <option value="saida">Saída</option>
-                        </select>
-                    </div>
-                    <div class="painel-admin-form-group">
-                        <label class="painel-admin-form-label">Quantidade</label>
-                        <input type="number" class="painel-admin-form-input" required>
-                    </div>
-                    <div class="painel-admin-form-group">
-                        <label class="painel-admin-form-label">Motivo</label>
-                        <textarea class="painel-admin-form-textarea" rows="3"
-                            placeholder="Descreva o motivo da movimentação..."></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="painel-modal-footer">
-                <button type="button" class="painel-btn-secondary"
-                    onclick="closeModal('estoque-modal')">Cancelar</button>
-                <button type="submit" class="painel-btn-primary" form="estoque-form">Confirmar</button>
-            </div>
-        </div>
-    </div>
-
     <script src="js/pedidos.js"></script>
     <script src="js/cadastro-produto.js"></script>
     <script src="js/admin-pedidos.js"></script>
@@ -553,8 +301,7 @@
                             <td>${produto.descricao ? produto.descricao.substring(0, 50) + '...' : ''}</td>
                             <td>${produto.foto_url ? '<img src="' + (produto.foto_url.startsWith('http') ? produto.foto_url : (produto.foto_url.startsWith('/') ? 'http://localhost:5000' + produto.foto_url : 'http://localhost:5000/' + produto.foto_url)) + '" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">' : '-'}</td>
                             <td>
-                                <button class="painel-btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="editarProduto(${produto.id})">Editar</button>
-                                <button class="painel-btn-danger" style="padding: 5px 10px; font-size: 12px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="deletarProduto(${produto.id})">Excluir</button>
+                                <button class="painel-btn-danger" style="padding: 10px 20px; font-size: 14px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;" onclick="deletarProduto(${produto.id})">Excluir</button>
                             </td>
                         `;
                         tbody.appendChild(tr);
@@ -631,78 +378,9 @@
             });
         });
 
-        // Formulário de estoque
-        document.getElementById('estoque-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            setTimeout(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: 'Estoque atualizado com sucesso!',
-                    confirmButtonColor: '#370400'
-                });
-                closeModal('estoque-modal');
-                this.reset();
-            }, 1000);
-        });
-
-        // Inicializar gráficos do dashboard
+        // Carregar produtos ao iniciar o painel
         document.addEventListener('DOMContentLoaded', function () {
-            // Gráfico de vendas mensais
-            const ctxVendas = document.getElementById('grafico-vendas-mensais');
-            if (ctxVendas) {
-                new Chart(ctxVendas.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                        datasets: [{
-                            label: 'Vendas (R$)',
-                            data: [1200, 1500, 1800, 2100, 2500, 2300, 2700, 3000, 3200, 3100, 3500, 4000],
-                            borderColor: '#370400',
-                            backgroundColor: 'rgba(55,4,0,0.08)',
-                            tension: 0.3,
-                            fill: true,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#370400'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: { display: false }
-                        },
-                        scales: {
-                            y: { beginAtZero: true }
-                        }
-                    }
-                });
-            }
-
-            // Gráfico de status dos pedidos
-            const ctxPedidos = document.getElementById('grafico-pedidos-status');
-            if (ctxPedidos) {
-                new Chart(ctxPedidos.getContext('2d'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Ativos', 'Pendentes'],
-                        datasets: [{
-                            data: [35, 12],
-                            backgroundColor: ['#370400', '#ffc107'],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'bottom'
-                            }
-                        },
-                        cutout: '65%'
-                    }
-                });
-            }
+            carregarProdutos();
         });
 
         // Função para mobile sidebar

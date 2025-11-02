@@ -223,3 +223,31 @@ func ConfirmarPagamentoPedido(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(response.Body).Decode(&resultado)
 	respostas.JSON(w, http.StatusCreated, resultado)
 }
+
+// ObterTotalVendas chama a API para obter o total de vendas (admin)
+func ObterTotalVendas(w http.ResponseWriter, r *http.Request) {
+	url := fmt.Sprintf("%s/admin/pedidos/total-vendas", config.APIURL)
+	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	if erro != nil {
+		fmt.Println("Erro ao chamar API de total de vendas:", erro)
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		fmt.Println("Erro na API de total de vendas, status:", response.StatusCode)
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	var resultado map[string]interface{}
+	if erro = json.NewDecoder(response.Body).Decode(&resultado); erro != nil {
+		fmt.Println("Erro ao decodificar resposta de total de vendas:", erro)
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: "Erro ao processar resposta"})
+		return
+	}
+
+	fmt.Println("Total de vendas (proxy):", resultado)
+	respostas.JSON(w, http.StatusOK, resultado)
+}

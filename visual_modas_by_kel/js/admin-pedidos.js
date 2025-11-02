@@ -13,6 +13,38 @@ function carregarPedidosAdmin() {
 
         renderizarPedidosAdmin(pedidos);
     });
+    
+    // Carregar total de vendas
+    carregarTotalVendas();
+}
+
+// Carregar total de vendas
+function carregarTotalVendas() {
+    $.ajax({
+        url: "/api/admin/pedidos/total-vendas",
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        success: function(response) {
+            console.log("Total de vendas recebido:", response);
+            if (response && typeof response.total !== 'undefined') {
+                const total = parseFloat(response.total) || 0;
+                const totalFormatado = total.toFixed(2).replace('.', ',');
+                $('#total-vendas').text(`R$ ${totalFormatado}`);
+                console.log("Total formatado:", totalFormatado);
+            } else {
+                console.warn("Resposta sem total válido:", response);
+                $('#total-vendas').text("R$ 0,00");
+            }
+        },
+        error: function(xhr) {
+            console.error("Erro ao buscar total de vendas:", xhr);
+            console.error("Status:", xhr.status);
+            console.error("Response:", xhr.responseText);
+            $('#total-vendas').text("R$ 0,00");
+        }
+    });
 }
 
 function renderizarPedidosAdmin(pedidos) {

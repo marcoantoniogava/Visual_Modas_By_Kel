@@ -358,5 +358,10 @@ func DeletarProduto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if response.StatusCode == http.StatusNoContent {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+
 	respostas.JSON(w, response.StatusCode, nil)
 }
