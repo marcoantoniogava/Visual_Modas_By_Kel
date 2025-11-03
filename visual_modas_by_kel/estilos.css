@@ -160,9 +160,9 @@ body {
     border: none;
     border-bottom: 1.5px solid #c9a063;
     color: #fff;
-    padding: 7px 30px 7px 24px;
+    padding: 6px 30px 6px 24px;
     width: 170px;
-    font-size: 13px;
+    font-size: 12px;
     outline: none;
     transition: border-color 0.2s;
 }
@@ -381,14 +381,15 @@ body {
     margin: 0 auto;
     overflow: hidden;
     background: #f8f8f8;
-    height: auto;
+    height: 50vh;
+    min-height: 400px;
 }
 
 .slides {
     display: none;
     width: 100%;
     position: relative;
-    height: auto;
+    height: 100%;
 }
 
 .slides.active {
@@ -401,11 +402,25 @@ body {
 
 .banner-img {
     width: 100%;
-    height: auto;
-    max-height: 600px;
+    height: 100%;
+    max-height: none;
     display: block;
     object-fit: cover;
     object-position: center;
+}
+
+@media (max-width: 992px) {
+    .banner-slideshow {
+        height: 45vh;
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 600px) {
+    .banner-slideshow {
+        height: 40vh;
+        min-height: 240px;
+    }
 }
 
 .prev,
